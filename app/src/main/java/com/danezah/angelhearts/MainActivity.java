@@ -16,7 +16,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.danezah.angelhearts.databinding.ActivityMainBinding;
-
 public class MainActivity extends AppCompatActivity {
 
 

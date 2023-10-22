@@ -1,53 +1,89 @@
 package com.danezah.angelhearts;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.core.view.WindowCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.danezah.angelhearts.databinding.ActivityMySpaceBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MySpaceActivity extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityMySpaceBinding binding;
+    private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_space);
 
-        binding = ActivityMySpaceBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        setSupportActionBar(binding.toolbar);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            // User is logged in, redirect to ForumActivity
+            Intent intent = new Intent(MySpaceActivity.this, ForumActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(MySpaceActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            DatabaseReference userRef = mDatabase.child("users").child(userId);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_my_space);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        String userType = dataSnapshot.child("userType").getValue(String.class);
+                        if (userType != null) {
+                            if (userType.equals("Angel")) {
+                                // User is registered as "Angel", redirect to AngelPanelActivity
+                                Intent intent = new Intent(MySpaceActivity.this, AngelPanelActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else if (userType.equals("Helpseeker")) {
+                                // User is registered as "Helpseeker", redirect to HelpseekerActivity
+                                Intent intent = new Intent(MySpaceActivity.this, HelpseekerActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // User is not registered as "Angel" or "Helpseeker", redirect to ForumActivity
+                                Intent intent = new Intent(MySpaceActivity.this, ForumActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    } else {
+                        // User data does not exist, redirect to ForumActivity
+                        Intent intent = new Intent(MySpaceActivity.this, ForumActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
-        });
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_my_space);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    // Handle database error if needed
+                }
+            });
+        } else {
+            // User is not logged in, redirect to LoginActivity
+            Intent intent = new Intent(MySpaceActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

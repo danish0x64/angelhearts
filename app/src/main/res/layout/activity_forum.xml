@@ -6,30 +6,30 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".ForumActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to AngelHearts"
-        android:textSize="24sp"
+        android:text="Choose your category:"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/angel_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:textSize="18sp"
+        android:text="Angel"
+        android:textSize="16sp"
         android:layout_marginBottom="8dp"/>
 
     <Button
-        android:id="@+id/register_button"
+        android:id="@+id/helpseeker_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:textSize="18sp"
+        android:text="Helpseeker"
+        android:textSize="16sp"
         android:layout_marginTop="8dp"/>
 
 </LinearLayout>

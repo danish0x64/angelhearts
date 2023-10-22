@@ -46,5 +46,6 @@
     <string name="title_activity_my_space">MySpaceActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="default_web_client_id"> 434920716658-opifs50ne8h4ul05lf6kv5gfqj28fe9u.apps.googleusercontent.com</string>
+    <string name="title_activity_forum">ForumActivity</string>
 
 </resources>
