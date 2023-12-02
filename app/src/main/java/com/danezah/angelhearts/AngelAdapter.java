@@ -1,5 +1,6 @@
 package com.danezah.angelhearts;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,21 @@ import java.util.List;
 public class AngelAdapter extends RecyclerView.Adapter<AngelAdapter.AngelViewHolder> {
 
     private List<String> angels;
+    private OnAngelClickListener angelClickListener;
 
+    // Constructor with OnAngelClickListener
+    public AngelAdapter(OnAngelClickListener listener) {
+        this.angelClickListener = listener;
+    }
+
+    // Setters for data and click listener
     public void setAngels(List<String> angels) {
         this.angels = angels;
         notifyDataSetChanged();
+    }
+
+    public void setOnAngelClickListener(OnAngelClickListener listener) {
+        this.angelClickListener = listener;
     }
 
     @NonNull
@@ -27,8 +39,18 @@ public class AngelAdapter extends RecyclerView.Adapter<AngelAdapter.AngelViewHol
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AngelViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AngelViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.bind(angels.get(position));
+        final int clickedPosition = position;
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (angelClickListener != null) {
+                    angelClickListener.onAngelClick(angels.get(clickedPosition));
+                }
+            }
+        });
     }
 
     @Override
@@ -47,5 +69,9 @@ public class AngelAdapter extends RecyclerView.Adapter<AngelAdapter.AngelViewHol
         public void bind(String angel) {
             angelName.setText(angel);
         }
+    }
+
+    public interface OnAngelClickListener {
+        void onAngelClick(String angelName);
     }
 }

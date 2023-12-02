@@ -1,5 +1,6 @@
 package com.danezah.angelhearts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AngelPanelActivity extends AppCompatActivity {
+public class AngelPanelActivity extends AppCompatActivity implements AngelAdapter.OnAngelClickListener {
 
     private RecyclerView recyclerView;
     private AngelAdapter angelAdapter;
@@ -35,8 +36,12 @@ public class AngelPanelActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        angelAdapter = new AngelAdapter();
+        angelAdapter = new AngelAdapter(this);
+
         recyclerView.setAdapter(angelAdapter);
+
+        // Set the OnAngelClickListener
+        angelAdapter.setOnAngelClickListener(this);
 
         // Fetch Angels from Firestore
         fetchAngels();
@@ -45,7 +50,7 @@ public class AngelPanelActivity extends AppCompatActivity {
     private void fetchAngels() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
-              //  .whereEqualTo("userType", "Angel")
+                //  .whereEqualTo("userType", "Angel")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -77,5 +82,19 @@ public class AngelPanelActivity extends AppCompatActivity {
     private void showNoAngelsMessage() {
         recyclerView.setVisibility(View.GONE);
         noAngelsText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAngelClick(String angelName) {
+        // Handle the click event, for example, start a chat activity
+        startChatWithAngel(angelName);
+    }
+
+    private void startChatWithAngel(String angelName) {
+        // Implement your logic to start a chat activity with the selected angel
+        // You can pass the angelName to the chat activity using Intent
+        // Example: Intent chatIntent = new Intent(this, ChatActivity.class);
+        // chatIntent.putExtra("angelName", angelName);
+        // startActivity(chatIntent);
     }
 }
