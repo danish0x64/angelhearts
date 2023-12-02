@@ -1,32 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-
 <resources>
-
-<!-- Base application theme -->
-
-
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <!-- Customize your application style here -->
 
     <!-- Example style for TextView displaying "No Angels available" message -->
     <style name="NoAngelsText">
-        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
 
     <!-- Example style for RecyclerView -->
     <style name="RecyclerViewStyle">
-        <!-- Add any specific styles for your RecyclerView here -->
+        <item name="android:background">@android:color/background_light</item>
+        <item name="android:divider">@android:color/darker_gray</item>
+        <item name="android:dividerHeight">1dp</item>
     </style>
 
     <!-- Customize your application style here -->
+
+    <!-- Styles for TextViews -->
+    <style name="TextViewStyle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
 
 </resources>

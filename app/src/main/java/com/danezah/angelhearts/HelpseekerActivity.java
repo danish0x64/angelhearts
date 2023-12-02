@@ -1,9 +1,11 @@
 package com.danezah.angelhearts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HelpseekerActivity extends AppCompatActivity {
+public class HelpseekerActivity extends AppCompatActivity implements AngelAdapter.OnAngelClickListener {
 
     private RecyclerView recyclerView;
     private AngelAdapter angelAdapter;
@@ -35,7 +37,7 @@ public class HelpseekerActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        angelAdapter = new AngelAdapter();
+        angelAdapter = new AngelAdapter(this);
         recyclerView.setAdapter(angelAdapter);
 
         // Fetch Angels from Firestore
@@ -77,5 +79,23 @@ public class HelpseekerActivity extends AppCompatActivity {
     private void showNoAngelsMessage() {
         recyclerView.setVisibility(View.GONE);
         noAngelsText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAngelClick(String angelName) {
+        // Handle the click event, for example, start a chat activity
+        Intent chatIntent = new Intent(this, ChatActivity.class);
+        chatIntent.putExtra("angelName", angelName);
+        startActivity(chatIntent);
+        startChatWithAngel(angelName);
+    }
+
+    private void startChatWithAngel(String angelName) {
+        // Implement your logic to start a chat activity with the selected angel
+        // You can pass the angelName to the chat activity using Intent
+        Toast.makeText(this, "Starting chat with " + angelName, Toast.LENGTH_SHORT).show();
+        // Example: Intent chatIntent = new Intent(this, ChatActivity.class);
+        // chatIntent.putExtra("angelName", angelName);
+        // startActivity(chatIntent);
     }
 }

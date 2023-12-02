@@ -8,18 +8,20 @@
 
     <TextView
         android:id="@+id/noAngelsText"
+        style="@style/TextViewStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Angels available"
-        android:textSize="18sp"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:text="Help Seeker will text you Be Ready :)"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        style="@style/RecyclerViewStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
-        android:layout_below="@id/noAngelsText"/>
+        android:visibility="gone"
+        android:layout_below="@id/noAngelsText"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>

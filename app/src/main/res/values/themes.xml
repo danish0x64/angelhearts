@@ -18,4 +18,7 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
+    <!-- Default color -->
+    <!-- Color when pressed -->
+    <!-- Color when disabled -->
 </resources>

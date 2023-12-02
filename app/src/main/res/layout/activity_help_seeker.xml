@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="?android:attr/windowBackground"
     tools:context=".HelpseekerActivity">
 
     <TextView
         android:id="@+id/noAngelsText"
+        style="@style/NoAngelsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sorry, no Angels available"
@@ -16,9 +18,11 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        style="@style/RecyclerViewStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout_below="@id/noAngelsText"/>
+        android:layout_below="@id/noAngelsText"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>

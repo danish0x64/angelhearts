@@ -13,6 +13,21 @@
         android:theme="@style/Theme.AngelHearts"
         tools:targetApi="31">
         <activity
+            android:name=".ChatActivity.java"
+            android:exported="false"
+            android:label="@string/title_activity_chat_activity.java"
+            android:theme="@style/Theme.AngelHearts" />
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.AngelHearts" />
+        <activity
+            android:name=".MessageAdapter"
+            android:exported="false"
+            android:label="@string/title_activity_message_adapter"
+            android:theme="@style/Theme.AngelHearts" />
+        <activity
             android:name=".activity_user_list"
             android:exported="false"
             android:label="@string/title_activity_user_list"

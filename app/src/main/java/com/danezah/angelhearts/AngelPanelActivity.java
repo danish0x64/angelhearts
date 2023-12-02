@@ -1,9 +1,11 @@
 package com.danezah.angelhearts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +21,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AngelPanelActivity extends AppCompatActivity {
+public class AngelPanelActivity extends AppCompatActivity implements AngelAdapter.OnAngelClickListener {
 
     private RecyclerView recyclerView;
     private AngelAdapter angelAdapter;
@@ -35,47 +37,65 @@ public class AngelPanelActivity extends AppCompatActivity {
 
         // Set up RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        angelAdapter = new AngelAdapter();
+        angelAdapter = new AngelAdapter(this);
         recyclerView.setAdapter(angelAdapter);
 
-        // Fetch Angels from Firestore
-        fetchAngels();
+        // Fetch Helpseekers from Firestore
+        fetchHelpseekers();
     }
 
-    private void fetchAngels() {
+    private void fetchHelpseekers() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("users")
-              //  .whereEqualTo("userType", "Angel")
+                .whereEqualTo("userType", "HelpSeeker") // Change "HelpSeeker" to the user type you want to fetch
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<String> angels = new ArrayList<>();
+                            List<String> helpseekers = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                angels.add(document.getString("username")); // Change "username" to the field you want to display
+                                helpseekers.add(document.getString("username")); // Change "username" to the field you want to display
                             }
 
-                            if (angels.isEmpty()) {
-                                showNoAngelsMessage();
+                            if (helpseekers.isEmpty()) {
+                                showNoHelpseekersMessage();
                             } else {
-                                showAngels(angels);
+                                showHelpseekers(helpseekers);
                             }
                         } else {
-                            Log.e("AngelPanelActivity", "Error getting Angels", task.getException());
+                            Log.e("AngelPanelActivity", "Error getting Helpseekers", task.getException());
                         }
                     }
                 });
     }
 
-    private void showAngels(List<String> angels) {
-        angelAdapter.setAngels(angels);
+    private void showHelpseekers(List<String> helpseekers) {
+        angelAdapter.setAngels(helpseekers);
         recyclerView.setVisibility(View.VISIBLE);
         noAngelsText.setVisibility(View.GONE);
     }
 
-    private void showNoAngelsMessage() {
+    private void showNoHelpseekersMessage() {
         recyclerView.setVisibility(View.GONE);
         noAngelsText.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onAngelClick(String helpseekerName) {
+        // Handle the click event, for example, start a chat activity
+        Intent chatIntent = new Intent(this, ChatActivity.class);
+        chatIntent.putExtra("helpseekerName", helpseekerName);
+        startActivity(chatIntent);
+        startChatWithHelpseeker(helpseekerName);
+    }
+
+    private void startChatWithHelpseeker(String helpseekerName) {
+        // Implement your logic to start a chat activity with the selected helpseeker
+        // You can pass the helpseekerName to the chat activity using Intent
+        Toast.makeText(this, "Starting chat with " + helpseekerName, Toast.LENGTH_SHORT).show();
+        // Example: Intent chatIntent = new Intent(this, ChatActivity.class);
+        // chatIntent.putExtra("helpseekerName", helpseekerName);
+        // startActivity(chatIntent);
     }
 }
