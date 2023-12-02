@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp"
-    tools:context=".ForumActivity">
+    android:padding="16dp">
 
     <TextView
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose your category:"
+        android:text="Welcome! Please choose a category and enter your username."
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/usernameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeText"
+        android:layout_marginTop="16dp"
+        android:hint="Enter your username"/>
 
     <Button
         android:id="@+id/angel_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Angel"
-        android:textSize="16sp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_below="@id/usernameEditText"
+        android:layout_marginTop="16dp"
+        android:text="Become an Angel"
+        android:layout_centerHorizontal="true"
+        android:onClick="onAngelButtonClick"/>
 
     <Button
-        android:id="@+id/helpseeker_button"
-        android:layout_width="match_parent"
+        android:id="@+id/helpSeeker_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Helpseeker"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:layout_below="@id/angel_button"
+        android:layout_marginTop="16dp"
+        android:text="Become a Help Seeker"
+        android:layout_centerHorizontal="true"
+        android:onClick="onHelpSeekerButtonClick"/>
 
-</LinearLayout>
+</RelativeLayout>

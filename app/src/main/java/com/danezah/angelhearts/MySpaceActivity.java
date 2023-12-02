@@ -54,13 +54,13 @@ public class MySpaceActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MySpaceActivity.this, AngelPanelActivity.class);
                                 startActivity(intent);
                                 finish();
-                            } else if (userType.equals("Helpseeker")) {
-                                // User is registered as "Helpseeker", redirect to HelpseekerActivity
+                            } else if (userType.equals("HelpSeeker")) {
+                                // User is registered as "HelpSeeker", redirect to HelpSeekerActivity
                                 Intent intent = new Intent(MySpaceActivity.this, HelpseekerActivity.class);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                // User is not registered as "Angel" or "Helpseeker", redirect to ForumActivity
+                                // User is not registered as "Angel" or "HelpSeeker", redirect to ForumActivity
                                 Intent intent = new Intent(MySpaceActivity.this, ForumActivity.class);
                                 startActivity(intent);
                                 finish();
